@@ -235,30 +235,17 @@ Features Available
 # Upload Dataset
 # ------------------------------
 
-    elif page=="📂 Upload Dataset":
+    elif page == "📂 Upload Dataset":
 
-        uploaded_file=st.file_uploader(
+    try:
+        st.session_state.data = pd.read_csv("disease_prediction.csv")
 
-            "Upload CSV Dataset",
+        st.success("✅ Dataset Loaded Successfully")
 
-            type=["csv"]
+        st.dataframe(st.session_state.data)
 
-        )
-
-        if uploaded_file is not None:
-
-            st.session_state.data=pd.read_csv(
-                uploaded_file
-            )
-
-            st.success(
-                "Dataset Uploaded Successfully"
-            )
-
-            st.dataframe(
-                st.session_state.data
-            )
-
+    except FileNotFoundError:
+        st.error("❌ disease_prediction.csv not found. Please upload it to the GitHub repository.")
 # ------------------------------
 # Dataset Information
 # ------------------------------
